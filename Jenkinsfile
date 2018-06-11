@@ -2,8 +2,17 @@ pipeline {
   agent any
   stages {
     stage('Compile') {
-      steps {
-        sh 'make'
+      parallel {
+        stage('Compile') {
+          steps {
+            sh 'make'
+          }
+        }
+        stage('Install Java') {
+          steps {
+            sh 'yum install java'
+          }
+        }
       }
     }
     stage('Test') {
